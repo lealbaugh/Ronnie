@@ -1,0 +1,531 @@
+//---Responsive sizes--------------------
+$media-mobile-max: 767px;
+$media-tablet-min: 768px;
+$media-tablet-max: 1024px;
+$media-desktop-min: 1025px;
+
+$sidebar-width: 25%;
+
+
+//---Colors------------------------------
+/*$main-background: #f2feef;*/ /*pale green*/
+$main-background: #f8fbff; /*pale blue*/
+$text-color: #343838;
+
+/*$sidebar-background: #4ECDC4;*/  /*teal*/
+$sidebar-background: #5ccbd7; /*blue*/
+$banner-text: $text-color;
+$sidebar-text-color: $text-color;
+
+$sidebar-link-color: darken($sidebar-background, 30);
+$sidebar-link-hover-color: darken($sidebar-background, 25);
+
+$link-color: $sidebar-link-hover-color;
+$link-visited-color: darken($sidebar-background, 30);
+$link-hover-color: darken($sidebar-background, 15);
+
+$footer-background: $main-background;
+$footer-separator: $sidebar-background;
+
+
+//---Utility mixins----------------------
+@mixin border-box {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box; 
+  -moz-box-sizing: border-box; 
+}
+
+@mixin rounded-corners ($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  -o-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin set-color ($color) {
+  background-color: $color;
+  color: lighten($color, 30);
+}
+
+@mixin rotate($degrees, $vertcorner, $horcorner) {
+  /* Safari */
+  -webkit-transform-origin: $vertcorner $horcorner;
+  -webkit-transform: rotate($degrees);
+  /* Firefox */
+  -moz-transform-origin: $vertcorner $horcorner;
+  -moz-transform: rotate($degrees);
+  /* IE */
+  -ms-transform-origin: $vertcorner $horcorner;
+  -ms-transform: rotate($degrees);
+  /* Opera */
+  -o-transform-origin: $vertcorner $horcorner;
+  -o-transform: rotate($degrees);
+  /* Internet Explorer */
+  @if $degrees == 90deg {filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);}
+  @else if $degrees == 180deg {filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);}
+  @else if $degrees == -90deg {filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);}
+  @else {filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0);}
+}
+
+@mixin verticalH2 ($percentage) {
+  text-align: right;
+  position: relative;
+  right:$percentage;
+  @include rotate(-90deg, bottom, right);
+  top:-1em;
+}
+
+@mixin border-mask ($side) {
+  @if $side == left {
+    -webkit-mask-box-image: url("../images/pink.svg") 0 3 0 25 repeat;
+  }
+  @else if $side == top {
+    -webkit-mask-box-image: url("../images/pink-top.svg") 25 0 1 0 repeat;
+  }
+  
+}
+
+//---Layout mixins-----------------------
+@mixin main ($subtractive-width) {
+  #main {
+    float: left;
+    min-height: 100%;
+    max-width: 1120px;
+    width: 100%-$subtractive-width;
+    background-color: $main-background;
+    @include border-box;
+
+    .pagination {
+      padding-left:5%;
+      padding-top: 12px;
+      padding-right:5%;
+      padding-bottom: 12px;
+      text-align: center;
+      border-top: 2px $footer-separator dashed;
+    }
+
+    article {
+      padding-left:5%;
+      padding-top: 20px;
+      padding-right:5%;
+      padding-bottom: 20px;
+
+      h1 {
+        margin:0px;
+        margin-bottom: 0.75em;
+        font-size: 1.5em;
+        font-weight: normal;
+        a {
+          text-decoration: none;
+/*          &:before{
+            content:"\2AF8";
+          }*/
+        }
+        &.summary-title {
+          margin-bottom: 0px;
+        }
+      }
+
+      p {
+        margin-bottom: 1em;
+        width:100%;
+      }
+
+      .meta {
+        font-style: italic;
+        margin:0px;
+      }
+
+      .meta + footer {
+        margin-bottom: 1em;
+      }
+
+      footer {
+        margin-top: 1em;
+        padding-top: 0.5em;
+        border-top: 1px $text-color solid;
+        .left {
+          float:left;
+        }
+        .right {
+          float: right;
+        }
+      }
+    }
+    article + article {
+      border-top: 2px $footer-separator dashed;
+    }
+  }
+}
+
+@mixin desktop-sidebar {
+  #sidebar {
+    float: left;
+    width: $sidebar-width; 
+    background-color: $sidebar-background;
+    padding:20px;
+    @include border-box;
+
+    #banner {
+      color: $banner-text;
+      text-shadow: 1px 1px 1px $main-background;
+      h2 {
+        text-align: right;
+        hanging-punctuation: force-end;
+        margin:0px;
+      }
+      margin-bottom:1.3em;
+    }
+
+    section {
+      width:100%;
+      margin: 0 auto;
+      margin-bottom: 1em;
+
+      .main-navigation {
+          list-style-type: none;
+          font-size: 18px;
+          margin: 0 auto;
+          text-align: center;
+          li {
+            display: inline;
+          }
+          li + li:before {
+            content:"/";
+          }
+      }
+      .mobile-nav {
+        display: none;
+      }
+      .subscription {
+        text-align: center;
+      }
+
+      .searchbar {
+        margin: 0 auto;
+        padding:0px;
+
+        form {
+          display:inline;
+          input {
+            @include border-box;
+            width: 100%;
+            background-color: $main-background;
+            @include rounded-corners(5px);
+          }
+        }
+      }
+
+      #categories {
+        margin: 0 auto;
+        list-style-type: none;
+        display:table;
+        padding-bottom: 1em;
+        li {
+          margin-left: -1.5em;
+          &.active {
+            position:relative;
+            right:0.75em;
+            &:before{
+              color:$main-background;
+              display:inline-block;
+              width:0.75em;
+              content:">";
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+@mixin mobile-sidebar {
+  #sidebar {
+    width: 100%; 
+    padding:5% 5% 0% 5%; 
+    background-color: $sidebar-background;
+    @include border-box;
+    h2 {
+      color: $banner-text;
+      text-shadow: 1px 1px 1px $main-background;
+      margin-bottom: 0.5em;
+    }
+    section {
+      text-align: center;
+      width:100%;
+      display:inline-block;
+
+      .main-navigation {
+        display: none;
+      }
+
+      .mobile-nav {
+        width:20%;
+        display: inline-block;
+        vertical-align: bottom;
+        -webkit-appearance: none;  /*Removes default chrome and safari style*/
+        -moz-appearance: none;  /*Removes default style Firefox*/
+        select {
+            -webkit-appearance: none;  /*Removes default chrome and safari style*/
+            -moz-appearance: none;  /*Removes default style Firefox*/
+            text-indent: 0.01px;  /* Removes default arrow from firefox*/
+             text-overflow: "";   /* Removes default arrow from firefox*/
+            width:100%;
+            height:17px;
+            border: 0;  /*Removes border*/
+            border-style: inset;
+            border-width: 1px;
+            padding:1px;
+            background-color: $main-background;
+            background-image: url('../images/dropdown_arrow.png'); 
+            background-position: 90% 70%;
+            background-repeat: no-repeat;
+            @include rounded-corners(5px);         
+          }
+      }
+
+      .subscription {
+        display:inline-block;
+        padding: 1px;
+        position: relative;
+        top:2px;
+      }
+
+      .searchbar {
+        display:inline-block;
+        vertical-align: bottom; /*Get them baselines baselined-up (for Firefox)*/
+        width:35%;
+        form {
+          display:inline;
+          input.search {
+            height:17px;
+            border: 0;
+            border-width:1px;
+            border-style: inset;
+            padding:1px;
+            width: 100%;
+            background-color: $main-background;
+            @include rounded-corners(5px);
+          }
+        }
+      }
+      #categories {
+        padding:0px;
+        margin-bottom: 1em;
+        margin-top: -0.5em;
+        li {
+          display: inline;
+          &.active {
+            a {
+              color: $main-background;
+            }
+          }
+        }
+        li + li:before {
+          content:"/";
+          font-weight: normal;
+        }
+      }
+    }
+  }
+}
+
+
+@mixin footer ($subtractive-width, $border-side) {
+  body > #footer {
+    background-color: $footer-background;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%-$subtractive-width;
+    border-top: 2px $footer-separator solid;
+    float:right;
+    text-align: center;
+    p {
+      margin:0px;
+    }
+    @if $border-side == left {@include border-mask($border-side)}
+  }
+}
+
+@mixin mobile-footer {
+  body > #footer {
+    background-color: $footer-background;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 100%;
+    border-top: 3px $text-color double;
+    float:right;
+    text-align: center;
+    span {
+      margin:0px;
+    }
+    span + span:before {
+      content:"- ";
+    }
+  }
+}
+
+@mixin desktop-footer ($subtractive-width){
+  body > #footer {
+    clear:both;
+    height:0;
+    width: $subtractive-width;
+    position: relative;
+    bottom: 2.5em;
+    text-align: center;
+    .credit {
+      font-size: 0.85em;
+      line-height: 1.25em;
+    }
+    span {
+      display: block;
+      /*margin:0px;*/
+      span + span:before {
+        margin-bottom:0.5em;
+      }
+      a {
+        color: $sidebar-link-color;
+        &:visited {
+          color: $sidebar-link-color;
+        }
+        &:hover {
+          color: $sidebar-link-hover-color;
+        }
+      }
+    }
+  } 
+}
+
+
+
+//---Main sidebar/body layout------------
+html, body {
+  /*position: relative;*/
+  display: block;
+  /*border: 1px red solid;*/
+  /*padding-bottom: -2.5em;*/
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  /*margin-bottom:-2.5em;*/
+  margin: 0px;
+  @include border-box;
+  background-color: $sidebar-background;
+  color: $text-color;
+  a {
+    text-decoration: none;
+    color: $link-color;
+    &:visited {
+      color: $link-visited-color;
+    }
+    &:hover {
+      color: $link-hover-color;
+    }
+  }
+  img {
+    display:block;
+    max-width: 90%;
+    max-height: 400px;
+    margin: 0.5em auto;
+    box-shadow: 0 0 0 1px #f8fbff, 0 0 0 2px #ccc;
+    /*border: 1px $main-background solid, 1px $text-color solid;*/
+  }
+  #sidebar {
+    color: $sidebar-text-color;
+    a {
+      color: $sidebar-link-color;
+      &:visited {
+        color: $sidebar-link-color;
+      }
+      &:hover {
+        color: $sidebar-link-hover-color;
+      }
+    }
+  }
+  .separator {
+    text-align: left;
+    border-top: 2px $main-background dashed;
+    margin:0px;
+    margin-top: 0.5em;
+  }
+  wrap {
+    position: relative;
+    display: block;
+    border: 1px red solid;
+  }
+}
+
+@media only screen and (max-width: $media-mobile-max) {
+  @include mobile-sidebar;
+  @include main(0);
+  @include mobile-footer;
+}
+
+@media only screen and (min-width: $media-mobile-max) {
+  @include desktop-sidebar;
+  @include main($sidebar-width);
+  @include desktop-footer($sidebar-width);
+}
+
+
+//---Niceties----------------------------
+
+/*If modernizr tells us we can mask images, add a cute scissors to dashed line*/
+.maskImage {
+  .separator { 
+    width:95%;
+    &:after {
+      display:inline-block;
+      position: relative; 
+      content:"";
+      left:100%;
+      bottom:0.75em;
+      background-color: $main-background;
+      @include mask-image('../images/scissors.png') 
+      }
+    }
+    @media only screen and (min-width: 768px) {
+      #main {
+        @include border-mask(left);
+      }
+    }
+    @media only screen and (max-width: $media-mobile-max) {
+      #main {
+        @include border-mask(top);
+        padding-top: 15px; /*To account for the zigzag edge.*/
+      }
+    }
+}
+
+.no-maskImage {
+    @media only screen and (min-width: 768px) {
+      #main {
+        border-left: 3px $text-color double;
+      }
+    }
+    @media only screen and (max-width: $media-mobile-max) {
+      #main {
+        border-top: 3px $text-color double;
+      }
+      .separator {
+        margin-bottom: 1em;
+      }
+      #categories {
+        margin-top: 1em;
+      }
+    }
+}
+
+/*if screen is small and less content than the length of the sidebar, set min-height bigger*/
+@media only screen and (max-height: 650px) and (min-width: $media-mobile-max) {
+  #main {
+    min-height: 650px;
+  }
+}
+
+/*You know what? border-box *everything* */
+* {
+  @include border-box;
+}

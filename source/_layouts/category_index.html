@@ -1,0 +1,12 @@
+---
+layout: default
+footer: false
+---
+
+
+{% for post in site.categories[page.category] %}
+<article>
+  {% include archive_post.html %}
+</article>
+{% endfor %}
+

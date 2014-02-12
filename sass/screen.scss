@@ -1,0 +1,16 @@
+$serif: "PT Serif", serif;
+$heading-font-family: "Bitter", serif;
+$header-title-font-family: "Bitter", serif;
+$header-subtitle-font-family: "Bitter", serif;
+
+$solarized: light;
+@import "compass";
+@include global-reset;
+
+
+@import "base/utilities";
+@import "base/solarized";
+@import "base/typography";
+@import "base/newlayout";
+
+@import "partials/syntax";
