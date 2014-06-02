@@ -161,5 +161,15 @@ ol ol, ul ol {
    margin-left: 15px; 
 }
 
+p + ul {
+  margin-top: -1em;
+  margin-bottom: 1em;
+}
+
+p + ol {
+  margin-top: -1em;
+  margin-bottom: 1em;
+}
+
 
 
