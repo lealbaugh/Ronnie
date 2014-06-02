@@ -140,3 +140,26 @@ article blockquote {
   word-wrap: break-word;
 }
 
+ul { 
+   list-style-type: circle; 
+   list-style-position: inside; 
+   margin-left: 1em;
+}
+ol { 
+   list-style-type: decimal; 
+   list-style-position: inside; 
+   margin-left: 1em;
+}
+ul ul, ol ul { 
+   list-style-type: circle; 
+   list-style-position: inside; 
+   margin-left: 15px; 
+}
+ol ol, ul ol { 
+   list-style-type: lower-latin; 
+   list-style-position: inside; 
+   margin-left: 15px; 
+}
+
+
+
