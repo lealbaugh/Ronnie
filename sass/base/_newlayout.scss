@@ -106,9 +106,9 @@ $footer-separator: $sidebar-background;
     }
 
     article {
-      padding-left:5%;
+      padding-left:10%;
       padding-top: 20px;
-      padding-right:5%;
+      padding-right:10%;
       padding-bottom: 20px;
 
       h1 {
@@ -289,8 +289,7 @@ $footer-separator: $sidebar-background;
       .subscription {
         display:inline-block;
         padding: 1px;
-        position: relative;
-        top:2px;
+        position: relative;        top:2px;
       }
 
       .searchbar {
@@ -319,12 +318,16 @@ $footer-separator: $sidebar-background;
           display: inline;
           &.active {
             a {
-              color: $main-background;
+              font-weight: bold;
+              /*color: $main-background;*/
             }
           }
         }
         li + li:before {
-          content:"/";
+          content:"\25c7";
+          color: $main-background;
+          font-weight: bold;
+          padding-right: 3px;
           font-weight: normal;
         }
       }
@@ -432,6 +435,25 @@ html, body {
     box-shadow: 0 0 0 1px #f8fbff, 0 0 0 2px #ccc;
     /*border: 1px $main-background solid, 1px $text-color solid;*/
   }
+  img + em {
+    font-size: smaller;
+    text-align: center;
+    display: block;
+  }
+  .videoWrapper {
+    @extend img;
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    padding-top: 25px;
+    height: 0;
+  }
+  .videoWrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
   #sidebar {
     color: $sidebar-text-color;
     a {
@@ -488,32 +510,39 @@ html, body {
     }
     @media only screen and (min-width: 768px) {
       #main {
-        @include border-mask(left);
+        /*@include border-mask(left);*/
+        border-left: 6px $sidebar-background double;
+
       }
     }
     @media only screen and (max-width: $media-mobile-max) {
       #main {
-        @include border-mask(top);
-        padding-top: 15px; /*To account for the zigzag edge.*/
+        /*@include border-mask(top);*/
+        /*padding-top: 15px; */ /*To account for the zigzag edge.*/
+        border-top: 6px $sidebar-background double;
+        padding-top: 10px;
       }
     }
 }
 
 .no-maskImage {
+    .separator {
+      margin-bottom: 1em;
+    }
     @media only screen and (min-width: 768px) {
       #main {
-        border-left: 3px $text-color double;
+        border-left: 6px $sidebar-background double;
       }
     }
+
     @media only screen and (max-width: $media-mobile-max) {
       #main {
-        border-top: 3px $text-color double;
+        border-top: 6px $sidebar-background double;
+        padding-top: 10px;
       }
-      .separator {
-        margin-bottom: 1em;
-      }
+      
       #categories {
-        margin-top: 1em;
+        /*margin-top: 1em;*/
       }
     }
 }

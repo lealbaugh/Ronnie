@@ -102,6 +102,11 @@ big { font-size: 1.2em; }
 
 article blockquote {
   font-style: italic;
+  font-size: smaller;
+  margin-left: 1em;
+  padding-left: 1em;
+  border-left: 5px double #5ccbd7;
+  margin-right: 2em;
 }
 
 .pullquote-right:before,
@@ -161,15 +166,14 @@ ol ol, ul ol {
    margin-left: 15px; 
 }
 
+
 p + ul {
   margin-top: -1em;
   margin-bottom: 1em;
 }
 
+
 p + ol {
   margin-top: -1em;
   margin-bottom: 1em;
 }
-
-
-
